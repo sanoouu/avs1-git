@@ -1,0 +1,30 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+using namespace std;
+
+double toDecimal(const string& number, int base) {
+    double decimal = 0.0;
+    size_t point = number.find('.');
+    int power = (point == string::npos) ? number.size() - 1 : point - 1;
+
+    for (size_t i = 0; i < number.size(); i++) {
+        if (number[i] == '.') continue;
+        char digit = number[i];
+        int value = (digit >= '0' && digit <= '9') ? digit - '0' : digit - 'A' + 10;
+        decimal += value * pow(base, power--);
+    }
+    return decimal;
+}
+
+int main() {
+    setlocale(LC_ALL, "RU");
+    string number;
+    int base;
+    cout << "Введите число и его систему счисления: ";
+    cin >> number >> base;
+
+    double decimal = toDecimal(number, base);
+    cout << "Десятичное представление: " << decimal << endl;
+    return 0;
+}
